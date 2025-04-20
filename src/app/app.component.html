@@ -1,0 +1,10 @@
+<app-header></app-header>
+
+<div class="loading-page" *ngIf="isLoading">
+  <div class="loading-content">
+    <h2 style="color: orange;">Loading...</h2>
+  </div>
+</div>
+<div class="router-container">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,56 @@
+
+.loading-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background: rgba(255, 255, 255, 0.8); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; 
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.loading-page.ng-trigger {
+  visibility: visible;
+  opacity: 1; 
+}
+
+.loading-content {
+  font-size: 1.5rem;
+  color: orange; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  gap: 10px; 
+}
+
+.loading-content h2 {
+  margin: 0; 
+  font-size: 1.5rem; 
+}
+
+.loading-content i {
+  font-size: 2rem;  
+  color: orange; 
+}
+
+
+@media (max-width: 768px) {
+  .loading-content {
+    font-size: 1.25rem;  
+  }
+
+  .loading-content h2 {
+    font-size: 1.25rem;  
+  }
+
+  .loading-content i {
+    font-size: 1.5rem; 
+  }
+}

@@ -1,0 +1,52 @@
+:host ::ng-deep .welcome-dialog {
+  border: 3px solid #007bff;
+  border-radius: 10px;
+  width: 450px !important;
+  max-width: 90%;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+:host ::ng-deep .welcome-dialog .p-dialog-header {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  border-bottom: 1px solid #007bff;
+}
+
+:host ::ng-deep .welcome-dialog .p-dialog-content {
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.dialog-open {
+  animation: slideInRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  :host ::ng-deep .welcome-dialog {
+    width: 95% !important;
+  }
+
+  :host ::ng-deep .welcome-dialog .p-dialog-content {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+
+  :host ::ng-deep .welcome-dialog .p-dialog-header {
+    font-size: 1rem;
+  }
+}

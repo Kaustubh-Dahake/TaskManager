@@ -1,0 +1,63 @@
+<div class="login-container">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-lg border-0 rounded">
+      <div class="card-header bg-primary text-white text-center">
+        <h4 class="mb-0">
+          <i class="pi pi-user me-2"></i> Sign in to Task Manager
+        </h4>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm" autocomplete="off">
+          <div class="mb-4">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              class="form-control form-control-lg"
+              autocomplete="username"
+              [(ngModel)]="username"
+              required
+              #usernameCtrl="ngModel"
+            />
+            <div *ngIf="usernameCtrl.invalid && usernameCtrl.touched" class="text-danger small">
+              Please enter your username.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control form-control-lg"
+              autocomplete="new-password"
+              [(ngModel)]="password"
+              required
+              #passwordCtrl="ngModel"
+            />
+            <div *ngIf="passwordCtrl.invalid && passwordCtrl.touched" class="text-danger small">
+              Please enter your password.
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 mb-3">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              [disabled]="loginForm.invalid || isLoading"
+            >
+              <i class="pi pi-sign-in me-2"></i> Log In
+            </button>
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3 d-flex align-items-center">
+            <i class="pi pi-exclamation-triangle me-2"></i>
+            {{ errorMessage }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

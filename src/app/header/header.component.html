@@ -1,0 +1,40 @@
+<header class="bg-primary text-white py-3 mb-2">
+  <div class="container d-flex justify-content-between align-items-center">
+    <h4 class="mb-0">Task Manager</h4>
+
+    <div *ngIf="isLoggedIn" class="d-flex align-items-center">
+      <img
+        [src]="user?.logo || 'assets/default-avatar.png'"
+        alt="User Logo"
+        class="rounded-circle me-2"
+        width="32"
+        height="32"
+        style="object-fit: cover;" />
+
+      <span class="me-3">{{ user?.username }}</span>
+
+      <button
+        pButton
+        type="button"
+        class="btn btn-danger"
+        label="Logout"
+        icon="pi pi-sign-out"
+        iconPos="right"
+        (click)="onLogout()">
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<p-dialog 
+  [(visible)]="displayDialog" 
+  [modal]="true" 
+  [closable]="false" 
+  [resizable]="false" 
+  [styleClass]="'welcome-dialog ' + dialogClass">
+
+  <p-header>Welcome</p-header>
+  <p>Hello, {{ user?.username }}! 👋</p>
+</p-dialog>
+
