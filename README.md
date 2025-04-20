@@ -1,7 +1,7 @@
-# Task Manager (Angular + ASP.NET Core Web API)
+# Task Manager (Angular + .NET Core Web API)
 
 
-This is a full-stack Task Manager application built using Angular for the frontend and ASP.NET Core Web API for the backend. It supports user authentication using JWT tokens, role-based access (Admins and Users), and full task management functionality including listing, creating, updating, and deleting tasks. The backend handles authentication and task logic, while the frontend provides a responsive and user-friendly interface for interacting with the system.
+This is a full-stack Task Manager application built using Angular for the frontend and .NET Core Web API for the backend. It supports user authentication using JWT tokens, role-based access (Admins and Users), and full task management functionality including listing, creating, updating, and deleting tasks. The backend handles authentication and task logic, while the frontend provides a responsive and user-friendly interface for interacting with the system.
 
 The frontend is available at [TaskManager](https://github.com/Kaustubh-Dahake/TaskManager) and the backend at [TaskManager_api](https://github.com/Kaustubh-Dahake/TaskManager_api). Both repositories must be cloned and run separately.
 
@@ -15,10 +15,10 @@ There are several predefined users included for demonstration purposes. Admins i
 
 The frontend uses standard Angular modules, services, routing, guards, and components. Key features include login authentication with JWT, task listing and editing forms, route protection based on roles, a header with user info, and integration with Bootstrap for styling. RxJS is used for managing reactive state and async data flows. The code is modular and organized into folders like `login`, `task-list`, `task-form`, and shared services.
 
-The backend is built with ASP.NET Core Web API using an in-memory database. It uses Entity Framework Core for data modeling and repositories, and FluentValidation for input validation. Authentication and authorization are handled via JWT tokens. Controllers include `AuthController` for login and token generation, and `TaskController` for task operations. Middleware is configured to validate JWT tokens and enforce role-based access.
+The backend is built with .NET Core Web API using an in-memory database. It uses Entity Framework Core for data modeling and repositories, and FluentValidation for input validation. Authentication and authorization are handled via JWT tokens. Controllers include `AuthController` for login and token generation, and `TaskController` for task operations. Middleware is configured to validate JWT tokens and enforce role-based access.
 
 This project is designed for learning and demonstration. Some advanced features like persistent database storage, robust form validations, unit testing, and deployment are simplified or omitted. The UI is kept clean and minimal to focus on core logic and functionality.
 
-Technologies used include Angular 14+, RxJS, Bootstrap, ASP.NET Core 8, Entity Framework Core, FluentValidation, and Swagger. The folder structure is cleanly organized, and the solution demonstrates how to build a modern full-stack web application with authentication, authorization, and RESTful API integration.
+Technologies used include Angular 14+, RxJS, Bootstrap, .NET Core 8, Entity Framework Core, FluentValidation, and Swagger. The folder structure is cleanly organized, and the solution demonstrates how to build a modern full-stack web application with authentication, authorization, and RESTful API integration.
 
 Feel free to fork, clone, modify, and build upon this project. It is open-source and available for educational and demonstration use.
