@@ -1,27 +1,24 @@
-# TaskManager
+# Task Manager (Angular + ASP.NET Core Web API)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.7.
 
-## Development server
+This is a full-stack Task Manager application built using Angular for the frontend and ASP.NET Core Web API for the backend. It supports user authentication using JWT tokens, role-based access (Admins and Users), and full task management functionality including listing, creating, updating, and deleting tasks. The backend handles authentication and task logic, while the frontend provides a responsive and user-friendly interface for interacting with the system.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The frontend is available at [TaskManager](https://github.com/Kaustubh-Dahake/TaskManager) and the backend at [TaskManager_api](https://github.com/Kaustubh-Dahake/TaskManager_api). Both repositories must be cloned and run separately.
 
-## Code scaffolding
+To get started, begin by cloning both repositories. For the frontend, clone the repository using `git clone https://github.com/Kaustubh-Dahake/TaskManager.git` and navigate into the project folder with `cd TaskManager`. Make sure Node.js and Angular CLI are installed. Run `npm install` to install dependencies and start the application using `ng serve`. You can access the app in your browser at `http://localhost:4200/login`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+For the backend, clone the repository using `git clone https://github.com/Kaustubh-Dahake/TaskManager_api.git` and open it in Visual Studio or Visual Studio Code. Run the backend API, which will be available at `https://localhost:7197/swagger/index.html` for testing via Swagger. Ensure the backend is running before using the frontend so API calls are properly handled.
 
-## Build
+The frontend connects to the backend using HTTP requests and includes an Angular interceptor that automatically attaches the JWT token stored in localStorage. Upon login, the user receives a token, which is used to authenticate further API calls. Role-based access ensures that Admins can manage all tasks and assign them to users, while regular users can only manage their own tasks.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+There are several predefined users included for demonstration purposes. Admins include `admin1` (password: `admin123`), `admin2` (`admin456`), `admin3` (`admin789`), and `admin4` (`admin101`). Regular users include `user1` (`user@123`), `user2` (`user456`), `user3` (`user789`), and `user4` (`user101`). Each user is displayed with a profile avatar using the UI Avatars service.
 
-## Running unit tests
+The frontend uses standard Angular modules, services, routing, guards, and components. Key features include login authentication with JWT, task listing and editing forms, route protection based on roles, a header with user info, and integration with Bootstrap for styling. RxJS is used for managing reactive state and async data flows. The code is modular and organized into folders like `login`, `task-list`, `task-form`, and shared services.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The backend is built with ASP.NET Core Web API using an in-memory database. It uses Entity Framework Core for data modeling and repositories, and FluentValidation for input validation. Authentication and authorization are handled via JWT tokens. Controllers include `AuthController` for login and token generation, and `TaskController` for task operations. Middleware is configured to validate JWT tokens and enforce role-based access.
 
-## Running end-to-end tests
+This project is designed for learning and demonstration. Some advanced features like persistent database storage, robust form validations, unit testing, and deployment are simplified or omitted. The UI is kept clean and minimal to focus on core logic and functionality.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Technologies used include Angular 14+, RxJS, Bootstrap, ASP.NET Core 8, Entity Framework Core, FluentValidation, and Swagger. The folder structure is cleanly organized, and the solution demonstrates how to build a modern full-stack web application with authentication, authorization, and RESTful API integration.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Feel free to fork, clone, modify, and build upon this project. It is open-source and available for educational and demonstration use.
