@@ -1,2 +1,2 @@
-# TaskManager_
+# TaskManager
 TaskManager (Angular)
