@@ -11,7 +11,7 @@ For the backend, clone the repository using `git clone https://github.com/Kaustu
 
 The frontend connects to the backend using HTTP requests and includes an Angular interceptor that automatically attaches the JWT token stored in localStorage. Upon login, the user receives a token, which is used to authenticate further API calls. Role-based access ensures that Admins can manage all tasks and assign them to users, while regular users can only manage their own tasks.
 
-There are several predefined users included for demonstration purposes. Admins include `admin1` (password: `admin123`), `admin2` (`admin456`), `admin3` (`admin789`), and `admin4` (`admin101`). Regular users include `user1` (`user@123`), `user2` (`user456`), `user3` (`user789`), and `user4` (`user101`). Each user is displayed with a profile avatar using the UI Avatars service.
+There are several predefined users included for demonstration purposes. Admins include `admin1` (password: `admin_123`), `admin2` (`admin_123`), `admin3` (`admin_123`), and `admin4` (`admin_123`). Regular users include `user1` (`user_123`), `user2` (`user_123`), `user3` (`user_123`), and `user4` (`user_123`). Each user is displayed with a profile avatar using the UI Avatars service.
 
 The frontend uses standard Angular modules, services, routing, guards, and components. Key features include login authentication with JWT, task listing and editing forms, route protection based on roles, a header with user info, and integration with Bootstrap for styling. RxJS is used for managing reactive state and async data flows. The code is modular and organized into folders like `login`, `task-list`, `task-form`, and shared services.
 
