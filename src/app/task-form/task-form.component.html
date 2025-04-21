@@ -1,4 +1,4 @@
-<p-toast position="top-right"></p-toast>
+<p-toast position="top-center"></p-toast>
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
     <h2 class="mb-2">{{ isEdit ? 'Edit Task' : 'Create Task' }}</h2>
@@ -8,7 +8,7 @@
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
     <div class="row g-3">
       <div class="col-12">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">Title<span style="color: red;">*</span></label>
         <input pInputText formControlName="title" id="title" class="form-control" placeholder="Enter task title" />
         <small *ngIf="taskForm.controls['title'].invalid && taskForm.controls['title'].touched" class="text-danger">
           Title is required.
@@ -16,28 +16,41 @@
       </div>
 
       <div class="col-12">
-        <label for="description" class="form-label">Description</label>
+        <label for="description" class="form-label">Description<span style="color: red;">*</span></label>
         <textarea pInputTextarea formControlName="description" id="description" class="form-control" rows="4"
           placeholder="Optional description..."></textarea>
       </div>
+      
       <div class="col-12 col-md-6">
-        <label for="dueDate" class="form-label">Due Date</label>
-        <input type="date" formControlName="dueDate" id="dueDate" class="form-control" />
-        <small *ngIf="taskForm.controls['dueDate'].hasError('required') && taskForm.controls['dueDate'].touched"
-          class="text-danger">
+        <label for="dueDate" class="form-label">Due Date<span style="color: red;">*</span></label>
+        <p-calendar
+          id="dueDate"
+          formControlName="dueDate"
+          dateFormat="yy-mm-dd"
+          [showIcon]="true"
+          inputId="dueDate"
+        ></p-calendar>
+      
+        <small
+          *ngIf="taskForm.controls['dueDate'].hasError('required') && taskForm.controls['dueDate'].touched"
+          class="text-danger"
+        >
           Due date is required.
         </small>
-        <small *ngIf="taskForm.controls['dueDate'].hasError('pastDate') && taskForm.controls['dueDate'].touched"
-          class="text-danger">
+        <small
+          *ngIf="taskForm.controls['dueDate'].hasError('pastDate') && taskForm.controls['dueDate'].touched"
+          class="text-danger"
+        >
           Due date cannot be in the past.
         </small>
       </div>
+      
       <div class="col-12 col-md-6 d-flex align-items-center mt-3">
         <p-checkbox formControlName="isCompleted" inputId="isCompleted" [binary]="true"></p-checkbox>
         <label for="isCompleted" class="ms-2 mb-0">Mark as Completed</label>
       </div>
       <div *ngIf="isAdmin" class="col-12">
-        <label for="assignedTo" class="form-label">Assign To</label>
+        <label for="assignedTo" class="form-label">Assign To<span style="color: red;">*</span></label>
         <p-dropdown formControlName="assignedTo"
                     [options]="users"
                     [placeholder]="'Select user'"

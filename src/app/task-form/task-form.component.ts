@@ -42,7 +42,13 @@ export class TaskFormComponent implements OnInit {
       this.isEdit = true;
       this.taskService.getById(id).subscribe(existingTask => {
         if (existingTask) {
-          this.taskForm.patchValue(existingTask);
+          this.taskForm.patchValue({
+            title: existingTask.title,
+            description: existingTask.description,
+            dueDate: existingTask.dueDate ? new Date(existingTask.dueDate) : null, 
+            isCompleted: existingTask.isCompleted,
+            assignedTo: existingTask.assignedTo
+          });
         }
       });
     }
@@ -51,7 +57,7 @@ export class TaskFormComponent implements OnInit {
   initializeForm(): void {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
       dueDate: ['', [Validators.required, this.noPastDateValidator()]],
       isCompleted: [false],
       assignedTo: ['', this.isAdmin ? Validators.required : []]
@@ -60,10 +66,19 @@ export class TaskFormComponent implements OnInit {
 
   noPastDateValidator(): ValidatorFn {
     return (control: AbstractControl) => {
-      const today = new Date().toISOString().split('T')[0];
-      return control.value && control.value < today ? { pastDate: true } : null;
+      if (control.value) {
+        const today = new Date();
+        const selectedDate = new Date(control.value);
+        selectedDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate < today) {
+          return { pastDate: true };
+        }
+      }
+      return null; 
     };
   }
+  
 
   onSubmit(): void {
     if (this.taskForm.invalid) {

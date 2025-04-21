@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { Task } from './taskInterface';
 import { AuthService } from './auth.service';
 
@@ -10,6 +10,9 @@ import { AuthService } from './auth.service';
 })
 export class TaskService {
   private apiUrl = 'http://localhost:5020/api/Tasks';
+
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  public tasks$ = this.tasksSubject.asObservable(); // Components can subscribe to this
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -20,11 +23,20 @@ export class TaskService {
     });
   }
 
-  getAll(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl, {
-      headers: this.getAuthHeaders()
-    });
-  }
+ // task.service.ts
+
+loadTasks(): Observable<Task[]> {
+  return this.http.get<Task[]>(this.apiUrl, {
+    headers: this.getAuthHeaders()
+  }).pipe(
+    tap(tasks => this.tasksSubject.next(tasks)),
+    catchError(error => {
+      console.error('Failed to load tasks', error);
+      return throwError(() => error);
+    })
+  );
+}
+
 
   getById(id: number): Observable<Task> {
     return this.http.get<Task>(`${this.apiUrl}/${id}`, {
@@ -36,6 +48,7 @@ export class TaskService {
     return this.http.post<Task>(this.apiUrl, task, {
       headers: this.getAuthHeaders()
     }).pipe(
+      tap(() => this.loadTasks()), // reload tasks
       catchError(error => {
         console.error('Create failed', error);
         return throwError(() => error);
@@ -47,6 +60,7 @@ export class TaskService {
     return this.http.put<void>(`${this.apiUrl}/${id}`, task, {
       headers: this.getAuthHeaders()
     }).pipe(
+      tap(() => this.loadTasks()), // reload tasks
       catchError(error => {
         console.error('Update failed', error);
         return throwError(() => error);
@@ -58,6 +72,7 @@ export class TaskService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders()
     }).pipe(
+      tap(() => this.loadTasks()), // reload tasks
       catchError(error => {
         console.error('Delete failed', error);
         return throwError(() => error);
@@ -69,6 +84,7 @@ export class TaskService {
     return this.http.post<void>(`${this.apiUrl}/${taskId}/assign`, { assignedTo: username }, {
       headers: this.getAuthHeaders()
     }).pipe(
+      tap(() => this.loadTasks()), // reload tasks
       catchError(error => {
         console.error('Assignment failed', error);
         return throwError(() => error);

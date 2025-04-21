@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +22,8 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
+import { AuthInterceptor } from './interceptors/AuthInterceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,6 @@ import { MessageService } from 'primeng/api';
     ReactiveFormsModule,
     HttpClientModule,
 
-    // PrimeNG
     CalendarModule,
     InputTextModule,
     InputTextareaModule,
@@ -49,7 +50,13 @@ import { MessageService } from 'primeng/api';
     TableModule,
     ToastModule
   ],
-  providers: [MessageService],
+  providers: [MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,  
+      multi: true 
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

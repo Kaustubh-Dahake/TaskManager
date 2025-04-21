@@ -33,14 +33,29 @@ export class TaskListComponent implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.isAdmin = this.authService.isAdmin();
-    });
-
-    this.taskService.getAll().subscribe(tasks => {
-      this.tasks = tasks;
-      this.filteredTasks = [...this.tasks];
-      this.messageService.add({ severity: 'info', summary: 'Loaded', detail: 'Tasks loaded successfully' });
+  
+      this.taskService.loadTasks().subscribe({
+        next: (tasks) => {
+          this.tasks = tasks;
+          this.filteredTasks = [...tasks];
+  
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Loaded',
+            detail: 'Tasks loaded successfully'
+          });
+        },
+        error: () => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to load tasks'
+          });
+        }
+      });
     });
   }
+  
 
   toggleFilters(): void {
     this.showFilters = !this.showFilters;
@@ -97,26 +112,35 @@ export class TaskListComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Filters Applied', detail: 'Filter and sort options applied' });
   }
 
-  private filterTasks(): void {
-    const term = this.searchTerm.trim().toLowerCase();
+ private filterTasks(): void {
+  const term = this.searchTerm.trim().toLowerCase();
 
-    this.filteredTasks = this.tasks.filter(task =>
-      task.title.toLowerCase().includes(term) ||
-      task.assignedTo.toLowerCase().includes(term)
-    );
-
-    if (this.sortOption) {
-      this.filteredTasks = this.filteredTasks.sort((a, b) => {
-        if (a[this.sortOption as keyof Task] < b[this.sortOption as keyof Task]) {
-          return -1;
-        } else if (a[this.sortOption as keyof Task] > b[this.sortOption as keyof Task]) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
+  this.filteredTasks = this.tasks.filter(task => {
+    const fieldValue = task[this.sortOption as keyof Task];
+    if (typeof fieldValue === 'string') {
+      return fieldValue.toLowerCase().includes(term);
     }
+    return false;
+  });
+
+  if (this.sortOption) {
+    this.filteredTasks = [...this.filteredTasks].sort((a, b) => {
+      const aValue = a[this.sortOption as keyof Task];
+      const bValue = b[this.sortOption as keyof Task];
+
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return aValue.localeCompare(bValue);
+      } else if (typeof aValue === 'boolean' && typeof bValue === 'boolean') {
+        return (aValue === bValue) ? 0 : aValue ? -1 : 1;
+      } else if (!isNaN(Date.parse(aValue as string)) && !isNaN(Date.parse(bValue as string))) {
+        return new Date(aValue as string).getTime() - new Date(bValue as string).getTime();
+      } else {
+        return 0;
+      }
+    });
   }
+}
+  
 
   isTaskCreatedByUser(task: Task): boolean {
     return task.assignedTo === this.currentUser?.username;
